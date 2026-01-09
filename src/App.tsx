@@ -141,6 +141,7 @@ export default function App() {
 
   // スタイル関連
   const getCellSizeClass = () => {
+    // 盤面を大きく戻す
     if (gridSize >= 6) return 'h-10 w-10 sm:h-12 sm:w-12 text-xl';
     if (gridSize === 5) return 'h-12 w-12 sm:h-14 sm:w-14 text-2xl';
     if (gridSize === 4) return 'h-16 w-16 sm:h-20 sm:w-20 text-3xl';
@@ -171,101 +172,77 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 font-sans selection:bg-blue-100">
+    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-2 font-sans selection:bg-blue-100 overflow-hidden">
       
-      {/* ヘッダーエリア */}
-      <div className="mb-8 text-center flex flex-col items-center">
-        {/* メインタイトル (マスコット付き) */}
-        <div className="flex items-center justify-center gap-3 mb-2">
+      {/* ヘッダー＆コントロールパネル (コンパクト化) */}
+      <div className="w-full max-w-sm flex flex-col items-center mb-2 gap-2">
+        {/* タイトル行 */}
+        <div className="flex items-center justify-center gap-2">
           <img 
-            src="/image_1.png" 
+            src="/public/image_1.png" 
             alt="Game Mascot" 
-            className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-md hover:scale-110 transition-transform duration-300"
+            className={`w-14 h-14 object-contain drop-shadow-sm hover:scale-110 transition-transform duration-300 ${gameMode === 'ghost' ? 'animate-bounce' : ''}`}
           />
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-800 tracking-tight">
-            Ghost<span className="text-purple-600">XO</span>
-          </h1>
-        </div>
-        
-        {/* コース（モード）表示 */}
-        <div className={`
-          inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-bold border transition-colors
-          ${gameMode === 'ghost' 
-            ? 'bg-purple-50 text-purple-700 border-purple-200' 
-            : 'bg-slate-50 text-slate-600 border-slate-200'}
-        `}>
-          <span>Playing:</span>
-          {gameMode === 'ghost' ? (
-            <span className="flex items-center gap-1">
-              <Ghost size={14} /> ゴーストモード
-            </span>
-          ) : (
-            <span className="flex items-center gap-1">
-              <Hash size={14} /> 通常モード
-            </span>
-          )}
-        </div>
-        
-        {/* 説明文 */}
-        <p className="mt-3 text-slate-400 text-xs sm:text-sm max-w-md">
-          {gameMode === 'ghost' 
-            ? `【${gridSize}つまで】古いコマが消滅します！記憶力の勝負。` 
-            : '定番のマルバツゲーム。一列揃えよう。'}
-        </p>
-      </div>
-
-      {/* 設定エリア */}
-      <div className="bg-white p-4 rounded-xl shadow-sm mb-6 w-full max-w-md space-y-4">
-        
-        {/* モード切替タブ */}
-        <div className="grid grid-cols-2 gap-2 p-1 bg-slate-100 rounded-lg">
-          <button
-            onClick={() => setGameMode('standard')}
-            className={`flex items-center justify-center gap-2 py-2 rounded-md text-sm font-bold transition-all ${
-              gameMode === 'standard' 
-                ? 'bg-white text-slate-800 shadow-sm' 
-                : 'text-slate-400 hover:text-slate-600'
-            }`}
-          >
-            <Hash size={16} />
-            通常モード
-          </button>
-          <button
-            onClick={() => setGameMode('ghost')}
-            className={`flex items-center justify-center gap-2 py-2 rounded-md text-sm font-bold transition-all ${
-              gameMode === 'ghost' 
-                ? 'bg-purple-100 text-purple-700 shadow-sm ring-1 ring-purple-200' 
-                : 'text-slate-400 hover:text-slate-600'
-            }`}
-          >
-            <Ghost size={16} />
-            ゴーストモード
-          </button>
+          <div>
+            <h1 className="text-4xl font-extrabold text-slate-800 tracking-tight leading-none">
+              Ghost<span className="text-purple-600">XO</span>
+            </h1>
+          </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
-          <label className="text-slate-600 font-medium flex items-center gap-2 text-sm w-full sm:w-auto">
-            盤面サイズ:
-            <select 
+        {/* コントロールバー (一行に集約) */}
+        <div className="bg-white px-3 py-1.5 rounded-full shadow-sm border border-slate-200 flex items-center justify-between w-full gap-2">
+           
+           {/* モード切替 */}
+           <div className="flex bg-slate-100 rounded-full p-0.5">
+             <button 
+               onClick={() => setGameMode('standard')}
+               className={`px-3 py-1 rounded-full text-xs font-bold transition-all flex items-center gap-1 ${
+                 gameMode === 'standard' ? 'bg-white text-slate-800 shadow-sm' : 'text-slate-400'
+               }`}
+             >
+               <Hash size={12} /> <span className="hidden xs:inline">通常</span>
+             </button>
+             <button 
+               onClick={() => setGameMode('ghost')}
+               className={`px-3 py-1 rounded-full text-xs font-bold transition-all flex items-center gap-1 ${
+                 gameMode === 'ghost' ? 'bg-purple-100 text-purple-700 shadow-sm' : 'text-slate-400'
+               }`}
+             >
+               <Ghost size={12} /> <span className="hidden xs:inline">Ghost</span>
+             </button>
+           </div>
+
+           <div className="h-4 w-px bg-slate-200"></div>
+
+           {/* サイズ選択 */}
+           <select 
               value={gridSize} 
               onChange={(e) => setGridSize(Number(e.target.value))}
-              className="bg-slate-50 border border-slate-300 text-slate-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2 font-bold w-full sm:w-auto"
+              className="bg-transparent text-xs font-bold text-slate-600 focus:outline-none cursor-pointer"
             >
-              <option value={3}>3 x 3</option>
-              <option value={4}>4 x 4</option>
-              <option value={5}>5 x 5</option>
-              <option value={6}>6 x 6</option>
+              <option value={3}>3x3</option>
+              <option value={4}>4x4</option>
+              <option value={5}>5x5</option>
+              <option value={6}>6x6</option>
             </select>
-          </label>
-          
-          <button 
-            onClick={() => resetGame()} 
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors shadow-md active:scale-95 text-sm font-bold"
-          >
-            <RefreshCw size={16} />
-            リセット
-          </button>
+
+           {/* リセットボタン */}
+           <button 
+             onClick={() => resetGame()} 
+             className="p-1.5 text-slate-400 hover:text-slate-800 hover:bg-slate-100 rounded-full transition-colors"
+             title="リセット"
+           >
+             <RefreshCw size={14} />
+           </button>
         </div>
+        
+        {/* 説明文 (復活) */}
+        <p className="text-[11px] sm:text-xs text-slate-500 text-center transition-all duration-300">
+          {gameMode === 'ghost' 
+            ? <span><span className="font-bold text-purple-600">【{gridSize}つまで】</span>古い順に消えます。記憶力の勝負！</span> 
+            : '縦・横・斜めに揃えたら勝ち。定番ルールです。'}
+        </p>
       </div>
 
       {/* ステータス表示 */}
@@ -274,7 +251,7 @@ export default function App() {
       </div>
 
       {/* ゴーストモード時のヒント */}
-      <div className="h-8 mb-4 flex items-center justify-center">
+      <div className="h-8 mb-2 flex items-center justify-center">
         {gameMode === 'ghost' && !winner && (
             <div className="bg-purple-600 text-white text-xs px-3 py-1 rounded-full shadow-lg flex items-center gap-1 animate-fade-in">
               <Info size={12} />
