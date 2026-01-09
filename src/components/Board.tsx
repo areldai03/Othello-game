@@ -9,7 +9,7 @@ interface BoardProps {
   winningLine: number[] | null;
   winner: string | null;
   onSquareClick: (i: number) => void;
-  getPieceLife: (i: number) => { rank: number; total: number } | null;
+  // getPieceLife removed as visual cues are disabled
 }
 
 export const Board: React.FC<BoardProps> = ({
@@ -18,8 +18,7 @@ export const Board: React.FC<BoardProps> = ({
   gameMode,
   winningLine,
   winner,
-  onSquareClick,
-  getPieceLife
+  onSquareClick
 }) => {
   // サイズごとのスタイルクラス
   const getCellSizeClass = () => {
@@ -29,7 +28,11 @@ export const Board: React.FC<BoardProps> = ({
     return 'h-24 w-24 sm:h-28 sm:w-28'; // 20/24 -> 24/28
   };
 
-  const calculateGhostInfo = (i: number, squareValue: SquareValue) => {
+  const calculateGhostInfo = () => {
+    // ユーザーのリクエストにより、次に消えるコマを視覚的に明示しないように変更
+    return null;
+    
+    /* 以前の処理: 古いコマを透明にする
     if (gameMode !== 'ghost' || !squareValue || winner) return null;
 
     const life = getPieceLife(i);
@@ -40,13 +43,14 @@ export const Board: React.FC<BoardProps> = ({
 
     const minOpacity = 0.3;
     const ratio = life.total > 1 ? life.rank / (life.total - 1) : 1;
-    const opacity = minOpacity + (1 - minOpacity) * ratio;
+    const opacity = minOpacity + (1 - minOpacity) * ration;
 
     return {
       opacity,
       scale: isDying ? 0.9 : 1,
       isDying
     };
+    */
   };
 
   return (
@@ -74,7 +78,7 @@ export const Board: React.FC<BoardProps> = ({
               gameMode={gameMode}
               disabled={disabled}
               sizeClass={getCellSizeClass()}
-              ghostInfo={calculateGhostInfo(i, square)}
+              ghostInfo={calculateGhostInfo()}
             />
           );
         })}
