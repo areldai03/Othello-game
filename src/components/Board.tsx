@@ -23,10 +23,10 @@ export const Board: React.FC<BoardProps> = ({
 }) => {
   // サイズごとのスタイルクラス
   const getCellSizeClass = () => {
-    if (gridSize >= 6) return 'h-10 w-10 sm:h-12 sm:w-12 text-xl';
-    if (gridSize === 5) return 'h-12 w-12 sm:h-14 sm:w-14 text-2xl';
-    if (gridSize === 4) return 'h-16 w-16 sm:h-20 sm:w-20 text-3xl';
-    return 'h-20 w-20 sm:h-24 sm:w-24 text-4xl';
+    if (gridSize >= 6) return 'h-11 w-11 sm:h-14 sm:w-14'; // 10/12 -> 11/14
+    if (gridSize === 5) return 'h-14 w-14 sm:h-16 sm:w-16'; // 12/14 -> 14/16
+    if (gridSize === 4) return 'h-20 w-20 sm:h-24 sm:w-24'; // 16/20 -> 20/24
+    return 'h-24 w-24 sm:h-28 sm:w-28'; // 20/24 -> 24/28
   };
 
   const calculateGhostInfo = (i: number, squareValue: SquareValue) => {

@@ -18,18 +18,23 @@ export const Header: React.FC<HeaderProps> = ({
     resetGame
 }) => {
     return (
-        <div className="w-full max-w-sm flex flex-col items-center mb-2 gap-2">
+        <div className="w-full max-w-md flex flex-col items-center mb-6 gap-6 px-4">
             {/* タイトル行 */}
-            <div className="flex items-center justify-center gap-2">
+            <div className="flex items-center justify-center gap-4">
                 <img
                     src="/image_1.png"
                     alt="Game Mascot"
-                    className={`w-12 h-12 object-contain drop-shadow-sm hover:scale-110 transition-transform duration-300 ${gameMode === 'ghost' ? 'animate-bounce' : ''}`}
+                    className={`w-16 h-16 object-contain drop-shadow-md hover:scale-110 transition-transform duration-300 ${gameMode === 'ghost' ? 'animate-bounce' : ''}`}
                 />
                 <div>
-                    <h1 className="text-2xl font-extrabold text-slate-800 tracking-tight leading-none">
-                        Ghost<span className="text-purple-600">XO</span>
+                    <h1 className="text-4xl font-extrabold text-slate-800 tracking-tight leading-none">
+                        GhostXO
                     </h1>
+                    <div className="flex items-center gap-2 mt-1">
+                        <span className="text-xs font-bold text-slate-400 uppercase tracking-widest bg-slate-100 px-2 py-0.5 rounded-full">Classic</span>
+                        <div className="w-1 h-1 rounded-full bg-slate-300"></div>
+                        <span className={`text-xs font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${gameMode === 'ghost' ? 'bg-purple-100 text-purple-600' : 'text-slate-400'}`}>Ghost</span>
+                    </div>
                 </div>
             </div>
 
@@ -79,7 +84,7 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
 
             {/* 説明文 */}
-            <p className="text-[11px] sm:text-xs text-slate-500 text-center transition-all duration-300">
+            <p className="text-xs sm:text-sm text-slate-500 text-center transition-all duration-300">
                 {gameMode === 'ghost'
                     ? <span><span className="font-bold text-purple-600">【{gridSize}つまで】</span>古い順に消えます。記憶力の勝負！</span>
                     : '縦・横・斜めに揃えたら勝ち。定番ルールです。'}
