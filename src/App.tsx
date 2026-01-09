@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { Trophy, X, Circle, Info } from 'lucide-react';
 import { Header } from './components/Header';
 import { Board } from './components/Board';
+import { TitleScreen } from './components/TitleScreen';
 import { useGame } from './hooks/useGame';
 import type { GameMode } from './types/game';
 
 export default function App() {
-  const [gridSize, setGridSize] = useState(3);
+  const [showTitle, setShowTitle] = useState(true);
+  const [gridSize, setGridSize] = useState(4);
   const [gameMode, setGameMode] = useState<GameMode>('standard');
   
   const {
@@ -45,15 +47,18 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-2 font-sans selection:bg-blue-100 overflow-hidden">
+    <>
+      {showTitle && <TitleScreen onComplete={() => setShowTitle(false)} />}
       
-      <Header
-        gameMode={gameMode}
-        gridSize={gridSize}
-        setGameMode={setGameMode}
-        setGridSize={setGridSize}
-        resetGame={resetGame}
-      />
+      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-2 font-sans selection:bg-blue-100 overflow-hidden">
+        
+        <Header
+          gameMode={gameMode}
+          gridSize={gridSize}
+          setGameMode={setGameMode}
+          setGridSize={setGridSize}
+          resetGame={resetGame}
+        />
 
       {/* ステータス表示 */}
       <div className="mb-2 h-8 flex items-center justify-center">
@@ -87,7 +92,8 @@ export default function App() {
           : `${gridSize}列揃えたら勝ちです！`}
       </div>
 
-    </div>
+      </div>
+    </>
   );
 }
 
