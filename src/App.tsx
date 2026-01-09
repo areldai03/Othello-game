@@ -174,12 +174,40 @@ export default function App() {
     <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 font-sans selection:bg-blue-100">
       
       {/* ヘッダーエリア */}
-      <div className="mb-6 text-center">
-        <h1 className="text-4xl font-extrabold text-slate-800 mb-2 tracking-tight flex items-center justify-center gap-2">
-          {gameMode === 'ghost' ? <Ghost className="text-purple-500 animate-pulse" /> : <Hash className="text-slate-400" />}
-          {gameMode === 'ghost' ? 'ゴースト・マルバツ' : 'マルバツゲーム'}
-        </h1>
-        <p className="text-slate-500 text-sm sm:text-base max-w-md mx-auto">
+      <div className="mb-8 text-center flex flex-col items-center">
+        {/* メインタイトル (マスコット付き) */}
+        <div className="flex items-center justify-center gap-3 mb-2">
+          <img 
+            src="/image_1.png" 
+            alt="Game Mascot" 
+            className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-md hover:scale-110 transition-transform duration-300"
+          />
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-800 tracking-tight">
+            Ghost<span className="text-purple-600">XO</span>
+          </h1>
+        </div>
+        
+        {/* コース（モード）表示 */}
+        <div className={`
+          inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-bold border transition-colors
+          ${gameMode === 'ghost' 
+            ? 'bg-purple-50 text-purple-700 border-purple-200' 
+            : 'bg-slate-50 text-slate-600 border-slate-200'}
+        `}>
+          <span>Playing:</span>
+          {gameMode === 'ghost' ? (
+            <span className="flex items-center gap-1">
+              <Ghost size={14} /> ゴーストモード
+            </span>
+          ) : (
+            <span className="flex items-center gap-1">
+              <Hash size={14} /> 通常モード
+            </span>
+          )}
+        </div>
+        
+        {/* 説明文 */}
+        <p className="mt-3 text-slate-400 text-xs sm:text-sm max-w-md">
           {gameMode === 'ghost' 
             ? `【${gridSize}つまで】古いコマが消滅します！記憶力の勝負。` 
             : '定番のマルバツゲーム。一列揃えよう。'}
