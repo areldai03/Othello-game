@@ -164,7 +164,7 @@ export default function App() {
         次は: 
         <span className={`flex items-center gap-1 font-bold ${xIsNext ? 'text-blue-500' : 'text-rose-500'}`}>
           {xIsNext ? <X size={24} /> : <Circle size={24} />}
-          {xIsNext ? 'X (バツ)' : 'O (マル)'}
+          {xIsNext ? 'バツ' : 'マル'}
         </span>
       </div>
     );
@@ -241,8 +241,18 @@ export default function App() {
       </div>
 
       {/* ステータス表示 */}
-      <div className="mb-6 h-8 flex items-center justify-center">
+      <div className="mb-2 h-8 flex items-center justify-center">
         {statusMessage()}
+      </div>
+
+      {/* ゴーストモード時のヒント */}
+      <div className="h-8 mb-4 flex items-center justify-center">
+        {gameMode === 'ghost' && !winner && (
+            <div className="bg-purple-600 text-white text-xs px-3 py-1 rounded-full shadow-lg flex items-center gap-1 animate-fade-in">
+              <Info size={12} />
+              {gridSize}個目の次は、一番古いコマが消えます
+            </div>
+        )}
       </div>
 
       {/* ゲーム盤面 */}
@@ -250,16 +260,6 @@ export default function App() {
         relative bg-white p-4 sm:p-6 rounded-2xl shadow-xl border-2 transition-colors duration-500
         ${gameMode === 'ghost' ? 'border-purple-200 shadow-purple-100' : 'border-slate-100'}
       `}>
-        {/* ゴーストモード時のヒント */}
-        {gameMode === 'ghost' && !winner && (
-           <div className="absolute -top-10 left-0 right-0 flex justify-center">
-             <div className="bg-purple-600 text-white text-xs px-3 py-1 rounded-full shadow-lg flex items-center gap-1 animate-fade-in">
-               <Info size={12} />
-               {gridSize}個目の次は、一番古いコマが消えます
-             </div>
-           </div>
-        )}
-
         <div 
           className="grid gap-2 sm:gap-3"
           style={{ 
