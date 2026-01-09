@@ -22,7 +22,7 @@ export const Header: React.FC<HeaderProps> = ({
             {/* タイトル行 */}
             <div className="flex items-center justify-center gap-4">
                 <img
-                    src="/image_1.png"
+                    src={`${import.meta.env.BASE_URL}image_1.png`}
                     alt="Game Mascot"
                     className={`w-16 h-16 object-contain drop-shadow-md hover:scale-110 transition-transform duration-300 ${gameMode === 'ghost' ? 'animate-bounce' : ''}`}
                 />
