@@ -1,73 +1,84 @@
-# React + TypeScript + Vite
+# GhostXO 👻
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### A strategic twist on classic Tic-Tac-Toe with memory and vanishing moves.
 
-Currently, two official plugins are available:
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Game Screenshot](/public/screenshot.png)
 
-## React Compiler
+## 🎮 Play Now
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+[**👉 Play GhostXO on GitHub Pages**](https://areldai03.github.io/Othello-game/)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ✨ Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 👻 Ghost Mode (The Twist)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+The core mechanic that changes everything. In **Ghost Mode**, the number of pieces you can have on the board is limited to the grid size (e.g., 4 pieces on a 4x4 grid).
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **FIFO Mechanic:** Once you exceed the limit, your **oldest piece vanishes**.
+- **Strategy:** You must plan not just where to place your next piece, but which of your existing pieces will disappear.
+- **Visual Cues:** Pieces about to vanish become translucent, adding tension to every move.
+
+### 🎨 Modern & Responsive Design
+
+- Clean, minimalist aesthetic with a playful ghost mascot.
+- Smooth animations for placing and vanishing pieces.
+- Fully responsive layout optimized for both desktop and mobile devices.
+
+### 📏 Dynamic Grid Sizes
+
+Choose your battlefield:
+
+- **4x4:** Fast-paced, high-stakes tactical skirmishes.
+- **5x5:** A balanced experience requiring foresight.
+- **6x6:** Complex strategy on a larger field.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** React 19, TypeScript
+- **Build Tool:** Vite
+- **Styling:** Tailwind CSS
+- **Icons:** Lucide React
+- **CI/CD:** GitHub Actions (Automated deployment to GitHub Pages)
+- **Environment:** Docker Support
+
+---
+
+## 🚀 Getting Started
+
+Clone the repository and start the development server:
+
+```bash
+# Clone the repository
+git clone https://github.com/areldai03/Othello-game.git
+
+# Navigate to the project directory
+cd Othello-game
+
+# Start the development server
+docker compose up -d
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📝 Rules of Engagement
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. **Objective:** Align your pieces (horizontal, vertical, or diagonal) to win.
+2. **Setup:**
+   - Player 1: **Ghost** (starts first)
+   - Player 2: **Normal**
+3. **The Ghost Rule:**
+   - If playing in Ghost Mode on a grid of size _N_:
+   - When you place your _(N+1)th_ piece, your _1st_ piece disappears.
+   - Example: On a 4x4 grid, placing your 5th piece removes your 1st piece.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+Created with 💜 by [areldai03](https://github.com/areldai03) and Mr. gem
