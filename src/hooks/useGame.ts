@@ -19,10 +19,10 @@ export const useGame = (gridSize: number, gameMode: GameMode) => {
     setIsDraw(false);
   }, [gridSize]);
 
-  // グリッドサイズが変わったらリセット
+  // グリッドサイズまたはゲームモードが変わったらリセット
   useEffect(() => {
     resetGame();
-  }, [resetGame]);
+  }, [resetGame, gameMode]);
 
   // 勝利判定
   const calculateWinner = useCallback((currentSquares: SquareValue[], size: number): WinInfo | null => {
