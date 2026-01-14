@@ -10,6 +10,7 @@ export default function App() {
   const [showTitle, setShowTitle] = useState(true);
   const [gridSize, setGridSize] = useState(4);
   const [gameMode, setGameMode] = useState<GameMode>('standard');
+  const [showGhostHints, setShowGhostHints] = useState(true);
   
   const {
     squares,
@@ -65,13 +66,24 @@ export default function App() {
         {statusMessage()}
       </div>
 
-      {/* ゴーストモード時のヒント */}
-      <div className="h-8 mb-2 flex items-center justify-center">
+      {/* ゴーストモード時のヒント & 設定 */}
+      <div className="min-h-8 mb-2 flex flex-col items-center justify-center gap-2">
         {gameMode === 'ghost' && !winner && (
+          <>
             <div className="bg-purple-600 text-white text-xs px-3 py-1 rounded-full shadow-lg flex items-center gap-1 animate-fade-in">
               <Info size={12} />
               {gridSize}個目の次は、一番古いコマが消えます
             </div>
+            <label className="flex items-center gap-2 text-xs text-slate-500 cursor-pointer hover:text-slate-700 transition-colors">
+              <input 
+                type="checkbox" 
+                checked={showGhostHints} 
+                onChange={(e) => setShowGhostHints(e.target.checked)}
+                className="w-4 h-4 rounded border-slate-300 text-purple-600 focus:ring-purple-500 transition-colors"
+              />
+              消滅予告を表示
+            </label>
+          </>
         )}
       </div>
 
@@ -84,6 +96,7 @@ export default function App() {
         xIsNext={xIsNext}
         onSquareClick={handleClick}
         getPieceLife={getPieceLife}
+        showGhostHints={showGhostHints}
       />
 
       {/* フッター */}

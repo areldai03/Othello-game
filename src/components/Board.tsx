@@ -11,6 +11,7 @@ interface BoardProps {
   onSquareClick: (i: number) => void;
   xIsNext: boolean;
   getPieceLife: (index: number) => { rank: number; total: number } | null;
+  showGhostHints: boolean;
 }
 
 export const Board: React.FC<BoardProps> = ({
@@ -20,7 +21,8 @@ export const Board: React.FC<BoardProps> = ({
   winningLine,
   winner,
   onSquareClick,
-  getPieceLife
+  getPieceLife,
+  showGhostHints
 }) => {
   // サイズごとのスタイルクラス
   const getCellSizeClass = () => {
@@ -31,7 +33,7 @@ export const Board: React.FC<BoardProps> = ({
   };
 
   const calculateGhostInfo = (i: number, squareValue: SquareValue) => {
-    if (gameMode !== 'ghost' || !squareValue || winner) return null;
+    if (!showGhostHints || gameMode !== 'ghost' || !squareValue || winner) return null;
 
     const life = getPieceLife(i);
     if (!life) return null;
@@ -42,12 +44,12 @@ export const Board: React.FC<BoardProps> = ({
     // 上限に達している場合、最も古い(rank 0)コマが次に消える
     const isDying = isFull && life.rank === 0;
 
-    // 次に消えるコマのみを強調表示（他は透明などにしない）
+    // 次に消えるコマのみを強調表示
     if (isDying) {
       return {
-        opacity: 0.8, // 完全に透明にはせず、少し薄くする程度
-        scale: 0.9,
-        isDying: true // Squareコンポーネントでアイコン表示などのスタイルが適用される
+        opacity: 1, // 色を薄くしない（ユーザー要望）
+        scale: 0.9, // サイズのみ縮小
+        isDying: true
       };
     }
 

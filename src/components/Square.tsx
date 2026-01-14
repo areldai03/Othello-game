@@ -61,10 +61,10 @@ export const Square: React.FC<SquareProps> = ({
       )}
 
       {value === 'X' && (
-        <X className={`w-2/3 h-2/3 stroke-[3px] animate-in zoom-in duration-200 ${isDying ? 'grayscale' : ''}`} />
+        <X className="w-2/3 h-2/3 stroke-[3px] animate-in zoom-in duration-200" />
       )}
       {value === 'O' && (
-        <Circle className={`w-2/3 h-2/3 stroke-[3px] animate-in zoom-in duration-200 ${isDying ? 'grayscale' : ''}`} />
+        <Circle className="w-2/3 h-2/3 stroke-[3px] animate-in zoom-in duration-200" />
       )}
     </button>
   );
