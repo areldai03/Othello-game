@@ -36,22 +36,22 @@ export const Board: React.FC<BoardProps> = ({
     const life = getPieceLife(i);
     if (!life) return null;
 
-    // 現在の盤面にある自分のコマ数と比較して、最も古い(rank 0)コマかどうか判定
-    // gridSize (例: 3) コ配置されていたら、rank 0 は次消える
+    // 現在の盤面にある自分のコマ数が上限（gridSize）に達しているか
     const isFull = life.total >= gridSize;
+    
+    // 上限に達している場合、最も古い(rank 0)コマが次に消える
     const isDying = isFull && life.rank === 0;
 
-    // 新しいコマほど濃く(1.0)、古いコマほど薄くする(0.4程度)
-    // life.total > 1 の場合のみ計算。1つしかないなら濃くていい。
-    const minOpacity = 0.4;
-    const ratio = life.total > 1 ? life.rank / (life.total - 1) : 1;
-    const opacity = minOpacity + (1 - minOpacity) * ratio;
+    // 次に消えるコマのみを強調表示（他は透明などにしない）
+    if (isDying) {
+      return {
+        opacity: 0.8, // 完全に透明にはせず、少し薄くする程度
+        scale: 0.9,
+        isDying: true // Squareコンポーネントでアイコン表示などのスタイルが適用される
+      };
+    }
 
-    return {
-      opacity,
-      scale: isDying ? 0.9 : 1,
-      isDying
-    };
+    return null;
   };
 
   return (
