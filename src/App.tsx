@@ -18,7 +18,8 @@ export default function App() {
     winningLine,
     isDraw,
     handleClick,
-    resetGame
+    resetGame,
+    getPieceLife
   } = useGame(gridSize, gameMode);
 
   // ステータス表示
@@ -80,7 +81,9 @@ export default function App() {
         gameMode={gameMode}
         winningLine={winningLine}
         winner={winner}
+        xIsNext={xIsNext}
         onSquareClick={handleClick}
+        getPieceLife={getPieceLife}
       />
 
       {/* フッター */}

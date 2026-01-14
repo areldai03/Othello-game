@@ -9,7 +9,8 @@ interface BoardProps {
   winningLine: number[] | null;
   winner: string | null;
   onSquareClick: (i: number) => void;
-  // getPieceLife removed as visual cues are disabled
+  xIsNext: boolean;
+  getPieceLife: (index: number) => { rank: number; total: number } | null;
 }
 
 export const Board: React.FC<BoardProps> = ({
@@ -18,7 +19,8 @@ export const Board: React.FC<BoardProps> = ({
   gameMode,
   winningLine,
   winner,
-  onSquareClick
+  onSquareClick,
+  getPieceLife
 }) => {
   // サイズごとのスタイルクラス
   const getCellSizeClass = () => {
@@ -28,29 +30,28 @@ export const Board: React.FC<BoardProps> = ({
     return 'h-24 w-24 sm:h-28 sm:w-28'; // 20/24 -> 24/28
   };
 
-  const calculateGhostInfo = () => {
-    // ユーザーのリクエストにより、次に消えるコマを視覚的に明示しないように変更
-    return null;
-    
-    /* 以前の処理: 古いコマを透明にする
+  const calculateGhostInfo = (i: number, squareValue: SquareValue) => {
     if (gameMode !== 'ghost' || !squareValue || winner) return null;
 
     const life = getPieceLife(i);
     if (!life) return null;
 
+    // 現在の盤面にある自分のコマ数と比較して、最も古い(rank 0)コマかどうか判定
+    // gridSize (例: 3) コ配置されていたら、rank 0 は次消える
     const isFull = life.total >= gridSize;
     const isDying = isFull && life.rank === 0;
 
-    const minOpacity = 0.3;
+    // 新しいコマほど濃く(1.0)、古いコマほど薄くする(0.4程度)
+    // life.total > 1 の場合のみ計算。1つしかないなら濃くていい。
+    const minOpacity = 0.4;
     const ratio = life.total > 1 ? life.rank / (life.total - 1) : 1;
-    const opacity = minOpacity + (1 - minOpacity) * ration;
+    const opacity = minOpacity + (1 - minOpacity) * ratio;
 
     return {
       opacity,
       scale: isDying ? 0.9 : 1,
       isDying
     };
-    */
   };
 
   return (
@@ -78,7 +79,7 @@ export const Board: React.FC<BoardProps> = ({
               gameMode={gameMode}
               disabled={disabled}
               sizeClass={getCellSizeClass()}
-              ghostInfo={calculateGhostInfo()}
+              ghostInfo={calculateGhostInfo(i, square)}
             />
           );
         })}
