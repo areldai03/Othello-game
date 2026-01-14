@@ -8,7 +8,7 @@ import type { GameMode } from './types/game';
 
 export default function App() {
   const [showTitle, setShowTitle] = useState(true);
-  const [gridSize, setGridSize] = useState(4);
+  const [gridSize, setGridSize] = useState(3);
   const [gameMode, setGameMode] = useState<GameMode>('standard');
   const [showGhostHints, setShowGhostHints] = useState(true);
   
